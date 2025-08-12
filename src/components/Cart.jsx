@@ -96,27 +96,49 @@ const Cart = () => {
   };
 
   const handleOrder = async () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      toast.error("Please login to place an order");
-      return;
-    }
+  const user = JSON.parse(localStorage.getItem('user'));
 
-    const userId = user._id;
+  // Step 1: Check if logged in
+  if (!user) {
+    toast.error("Please login to place an order");
+    // Optionally, navigate to login page
+    // navigate('/login');
+    return;
+  }
 
-    const order = {
-      items: cartItems,
-      userId,
-      total: getTotal(),
-    };
+  // Step 2: Check if profile is complete (example: address, phone)
+  if (!user.address || !user.phone) {
+    toast.error("Please complete your profile before placing an order");
+    // Optionally, navigate to profile page
+    // navigate('/profile');
+    return;
+  }
 
+  // Step 3: Check if cart has items
+  if (cartItems.length === 0) {
+    toast.error("Your cart is empty");
+    return;
+  }
+
+  // Step 4: Place order
+  const order = {
+    items: cartItems,
+    userId: user._id,
+    total: getTotal(),
+  };
+
+  try {
     await placeOrder(order);
     localStorage.setItem('lastOrder', JSON.stringify(order));
     toast.success('Order placed successfully!');
     setCartItems([]);
     localStorage.removeItem('cart');
+  } catch (error) {
+    toast.error("Failed to place order. Please try again.");
+    console.error(error);
+  }
+};
 
-  };
 
   return (
     <section className="cart">
@@ -144,39 +166,49 @@ const Cart = () => {
           </div>
         ))}
         {cartItems.length > 0 && (
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-            marginTop: 24,
-            gap: 12
-          }}>
-            <div style={{ fontWeight: 'bold', fontSize: 18 }}>
-              Grand Total: ₹{getTotal()}
+          <div className="order-summary">
+            <h3>Order Summary</h3>
+
+            {/* Estimated Time */}
+            <div className="summary-row">
+              <span className="label">Estimated Delivery:</span>
+              <span className="value orange-text">30-45 min</span>
             </div>
+
+            <hr />
+
+            {/* Price Breakdown */}
+            <div className="summary-row">
+              <span className="label">Subtotal:</span>
+              <span className="value">₹{getTotal()}</span>
+            </div>
+            <div className="summary-row">
+              <span className="label">Delivery Fee:</span>
+              <span className="value">₹30</span>
+            </div>
+            <div className="summary-row">
+              <span className="label">Service Fee:</span>
+              <span className="value">₹10</span>
+            </div>
+
+            <hr />
+
+            {/* Grand Total */}
+            <div className="summary-row grand-total">
+              <span className="label">Grand Total:</span>
+              <span className="value">
+                ₹{getTotal() + 30 + 10}
+              </span>
+            </div>
+
+            {/* Order Now Button */}
             <button
-              onClick={() => setShowOrderModal(true)}
-              style={{
-                background: '#28a745',
-                color: 'white',
-                border: 'none',
-                padding: '10px 20px',
-                borderRadius: 6,
-                cursor: 'pointer',
-                fontWeight: 'bold'
-              }}
+              className="order-now-btn"
+              onClick={() => handleOrder(true)}
             >
               Order Now
             </button>
           </div>
-        )}
-        {showOrderModal && (
-          <OrderModal
-            items={cartItems}
-            total={getTotal()}
-            onConfirm={handleOrder}
-            onClose={() => setShowOrderModal(false)}
-          />
         )}
       </div>
     </section>
