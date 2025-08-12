@@ -228,25 +228,25 @@ const Menu = () => {
                 <p>{item.desc}</p>
                 <div className="price">₹{item.price}</div>
                 <div className="card-actions" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', width: '100%' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'center', width: '100%' }}>
+                  <div className='quantity-controls' >
                     <button
+                    className='quantity-btn decrement'
                       onClick={() => handleDecrement(key)}
-                      style={{ width: 32, height: 32, background: '#ff6b6b', color: 'white', border: 'none', borderRadius: '50%', fontSize: 18, cursor: 'pointer' }}
                     >-</button>
                     <span style={{ minWidth: 24, textAlign: 'center', fontWeight: 'bold' }}>{quantity}</span>
                     <button
+                    className='quantity-btn increment'
                       onClick={() => handleIncrement(key)}
-                      style={{ width: 32, height: 32, background: '#fdec00', color: '#252725', border: 'none', borderRadius: '50%', fontSize: 18, cursor: 'pointer' }}
                     >+</button>
                   </div>
-                  <div style={{ display: 'flex', gap: '10px', marginTop: 8, justifyContent: 'center', width: '100%' }}>
+                  <div className='action-buttons'>
                     <button
                       onClick={() => handleAdd({ name: item.name, price: item.price, img: item.img }, key)}
-                      style={{ background: '#ff6b6b', color: 'white', border: 'none', borderRadius: 6, padding: '6px 16px', fontWeight: 'bold', cursor: 'pointer' }}
+                      className='add-to-cart'
                     >Add to Cart</button>
                     <button
                       onClick={() => handleOrderNow({ name: item.name, price: item.price, img: item.img }, key)}
-                      className="order-btn" style={{ background: '#fdec00', color: '#252725', border: 'none', borderRadius: 6, padding: '6px 16px', fontWeight: 'bold', cursor: 'pointer' }}>
+                      className="order-now">
                       Order Now
                     </button>
                   </div>
