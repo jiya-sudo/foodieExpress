@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer-row">
           <div className="footer-col">
             <h3>
-              MyFood<span>Delivery</span>
+              foodie<span>Express</span>
             </h3>
             <p>Your trusted partner for delicious meals, delivered fast and fresh every time.</p>
           </div>
@@ -52,7 +52,7 @@ const Footer = () => {
             <a href="#"><img src="https://img.icons8.com/color/48/twitter-circled--v1.png" alt="Twitter" /></a>
             <a href="#"><img src="https://img.icons8.com/color/48/youtube--v1.png" alt="YouTube" /></a>
           </div>
-          <p>&copy; 2025 MyFoodDelivery. All rights reserved. | Designed by Naman</p>
+         
         </div>
       </div>
     </footer>
