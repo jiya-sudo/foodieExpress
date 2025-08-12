@@ -1,0 +1,155 @@
+/* ========== GLOBAL STYLES ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #fff8f0;
+  color: #2f3542;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.header-right button {
+  background-color: #ff6347; /* Tomato red or any brand color */
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+}
+
+.header-right button:hover {
+  background-color: #e5533d; /* Darker shade on hover */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ========== HEADER ========== */
+header {
+  background-color: #fff;
+  box-shadow: 0 4px 13px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo span {
+  color: #fdec00;
+}
+
+/* ========== NAVIGATION ========== */
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+nav ul li a {
+  position: relative;
+  color: inherit;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Underline effect */
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 2px;
+  background-color: #fdec00;
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+  width: 100%;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: #ff6b6b;
+  font-weight: bold;
+}.logout-btn {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.logout-btn:hover {
+    background: #c0392b;
+}
+
+
+/* Cart icon alignment */
+.cart-icon {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ========== LOGIN BUTTON ========== */
+.login {
+  padding: 8px 14px;
+  background: linear-gradient(45deg, #ff6b6b, #fdec00);
+  color: white;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login:hover {
+  background: white;
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+}
+header{
+  padding: 15px 40px; /* or 20px 0 if nested inside .container */
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}

@@ -1,0 +1,298 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f8f8f8;
+  color: #333;
+}
+
+/* Hero Section */
+.hero-about {
+  background: url('https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141355.jpg') no-repeat center center/cover;
+  padding: 100px 20px;
+  color: white;
+  text-align: center;
+}
+.hero-about .hero-content {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: auto;
+}
+.hero-content h1{
+    background:none;
+    font-size:25px;
+}
+/* About Section */
+.about {
+  padding: 60px 20px;
+  background: #fff9f0;
+}
+.about-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+  align-items: center;
+  gap: 40px;
+}
+.about-text {
+  flex: 1;
+}
+.about-text h1 {
+  font-size: 2.5rem;
+  color: #ff6f00;
+}
+.about-text p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.about-image {
+  flex: 1;
+  text-align: center;
+}
+.about-image img {
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Mission & Vision Section */
+.mission-vision {
+  padding: 60px 20px;
+  background-color: #fffdf7;
+}
+.mission-vision .content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+  max-width: 1100px;
+  margin: auto;
+}
+.mission-vision .text,
+.mission-vision .image {
+  flex: 1;
+}
+.mission-vision img {
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+/* Our Journey Section */
+.journey {
+  padding: 60px 20px;
+  background: #ffffff;
+  text-align: center;
+}
+.journey h2 {
+  font-size: 2rem;
+  color: #d35400;
+  margin-bottom: 40px;
+}
+.timeline {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.timeline-item {
+  background: #fff3e0;
+  padding: 20px;
+  border-radius: 10px;
+  width: 200px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+.timeline-item span {
+  font-weight: 600;
+  color: #e65100;
+  font-size: 1.2rem;
+}
+.timeline-item p {
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+/* Our Story Section */
+.our-story {
+  padding: 60px 20px;
+  background: #fff;
+  max-width: 1000px;
+  margin: auto;
+  text-align: center;
+}
+.our-story h2 {
+  color: #e67e22;
+  margin-bottom: 20px;
+}
+.our-story p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+/* Key Stats Section */
+.key-stats {
+  background-color: #fff4e0;
+  padding: 60px 20px;
+  text-align: center;
+}
+.stats-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1000px;
+  margin: auto;
+}
+.stat-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 180px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.stat-box h3 {
+  font-size: 2rem;
+  color: #ff6f00;
+}
+.stat-box p {
+  margin-top: 10px;
+  color: #555;
+}
+
+/* Team Section */
+.team {
+  padding: 60px 20px;
+  background: #fffcf8;
+  text-align: center;
+}
+.team h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #ff6f00;
+}
+.team-members {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.member {
+  width: 220px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+.member img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.member h4 {
+  margin: 10px 0 4px;
+  font-size: 1.1rem;
+  color: #444;
+}
+.member p {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* Trust Section */
+.trust {
+  padding: 60px 20px;
+  background-color: #fefefe;
+  text-align: center;
+}
+.trust h2 {
+  font-size: 2rem;
+  color: #ff6f00;
+  margin-bottom: 30px;
+}
+.trust ul {
+  list-style: none;
+  padding: 0;
+  max-width: 700px;
+  margin: auto;
+}
+.trust li {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #444;
+}
+.trust i {
+  color: #ff6f00;
+  font-size: 1.3rem;
+}
+
+/* CTA Section */
+.cta {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #ff6f00, #ffa726);
+  color: white;
+  text-align: center;
+}
+.cta h2 {
+  font-size: 2rem;
+}
+.cta p {
+  font-size: 1.1rem;
+  margin: 20px 0;
+}
+.cta-btn {
+  background: #fff;
+  color: #ff6f00;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+.cta-btn:hover {
+  background: #ffe0b2;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .about-container,
+  .mission-vision .content,
+  .timeline,
+  .team-members {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .about-text h1,
+  .journey h2,
+  .team h2,
+  .trust h2,
+  .cta h2 {
+    font-size: 1.8rem;
+  }
+
+  .stat-box {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .hero-about {
+    padding: 80px 15px;
+  }
+
+  .hero-about .hero-content {
+    padding: 20px;
+  }
+}

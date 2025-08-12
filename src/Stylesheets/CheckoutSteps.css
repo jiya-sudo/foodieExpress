@@ -1,0 +1,142 @@
+.checkout-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fefefe;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.step {
+  margin-bottom: 30px;
+}
+
+.step h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+  border-left: 6px solid #6c63ff;
+  padding-left: 10px;
+}
+
+.step p {
+  font-size: 16px;
+  color: #555;
+  margin: 10px 0;
+}
+
+textarea {
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: 0.3s ease;
+  resize: vertical;
+}
+
+textarea:focus {
+  border-color: #6c63ff;
+  outline: none;
+  background: #fcfcff;
+}
+
+select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  margin-bottom: 10px;
+  transition: 0.3s ease;
+}
+
+select:focus {
+  border-color: #6c63ff;
+  outline: none;
+  background: #f9f9ff;
+}
+
+button {
+  background-color: #6c63ff;
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #4e44d5;
+}
+
+button:disabled {
+  background-color: #b3b3b3;
+  cursor: not-allowed;
+}
+
+.order-summary {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  border: 1px solid #e3e3e3;
+}
+
+.order-summary div {
+  margin-bottom: 6px;
+}
+
+.discount-info {
+  color: green;
+  font-weight: bold;
+}
+
+.final-price {
+  font-size: 18px;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.success-step {
+  text-align: center;
+}
+
+.success-step .tick {
+  width: 110px;
+  height: 110px;
+  background-color: #28a745;
+  border-radius: 50%;
+  color: white;
+  font-size: 48px;
+  line-height: 110px;
+  margin: 0 auto 20px;
+  animation: pop 0.4s ease-out;
+}
+
+.success-step h3 {
+  color: #2e7d32;
+  margin-top: 10px;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
