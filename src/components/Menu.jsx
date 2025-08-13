@@ -62,15 +62,15 @@ const Menu = () => {
           image: item.img,  // Note: Corrected from `item.image`
         }),
       });
-      if (!res.ok) {
-        const errData = await res.json();
-        console.error('Server responded with error:', errData);
-        throw new Error(errData.message || 'Failed to add item to cart');
-      }
+
       const data = await res.json();
-      const confirmed = window.confirm(`${item.name} added to cart. Go to Cart?`);
-      if (confirmed) {
-        navigate('/cart');
+
+      if (!res.ok) {
+        const confirmed = window.confirm(`${item.name} added to cart. Go to Cart?`);
+        if (confirmed) navigate('/cart');
+      } else {
+        console.error('Server responded with error:', data);
+        alert(data.message || 'Failed to add item to cart.');
       }
     } catch (err) {
       console.error('❌ Error adding to cart:', err);
@@ -231,12 +231,12 @@ const Menu = () => {
                 <div className="card-actions" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', width: '100%' }}>
                   <div className='quantity-controls' >
                     <button
-                    className='quantity-btn decrement'
+                      className='quantity-btn decrement'
                       onClick={() => handleDecrement(key)}
                     >-</button>
                     <span style={{ minWidth: 24, textAlign: 'center', fontWeight: 'bold' }}>{quantity}</span>
                     <button
-                    className='quantity-btn increment'
+                      className='quantity-btn increment'
                       onClick={() => handleIncrement(key)}
                     >+</button>
                   </div>

@@ -142,11 +142,22 @@ const Cart = () => {
             <div style={{ flex: 1 }}>
               <h4>{item.name}</h4>
               <p>Price: ₹{item.price}</p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <button onClick={() => handleDecrement(item)} style={{ width: 28, height: 28, background: '#ff6b6b', color: 'white', border: 'none', borderRadius: '50%', fontSize: 16, cursor: 'pointer' }}>-</button>
-                <span style={{ minWidth: 24, textAlign: 'center', fontWeight: 'bold' }}>{item.quantity || 1}</span>
-                <button onClick={() => handleIncrement(item)} style={{ width: 28, height: 28, background: '#fdec00', color: '#252725', border: 'none', borderRadius: '50%', fontSize: 16, cursor: 'pointer' }}>+</button>
+              <div className="quantity-controls">
+                <button
+                  className="quantity-btn minus"
+                  onClick={() => handleDecrement(item)}
+                >-</button>
+
+                <span className="quantity-number">
+                  {item.quantity || 1}
+                </span>
+
+                <button
+                  className="quantity-btn plus"
+                  onClick={() => handleIncrement(item)}
+                >+</button>
               </div>
+
               <p>Total: ₹{item.price * (item.quantity || 1)}</p>
               <button onClick={() => handleDelete(item._id)} style={{ background: '#eee', color: '#ff6b6b', border: 'none', borderRadius: 4, padding: '4px 12px', marginTop: 8, cursor: 'pointer' }}>Remove</button>
             </div>
