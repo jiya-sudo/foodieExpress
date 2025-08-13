@@ -1,154 +1,141 @@
 import React, { useEffect, useState } from 'react';
-import OrderModal from './OrderModal';
 import '../Stylesheets/cart.css';
-import { getCartItems, addToCart, removeFromCart, placeOrder, decrementCartItem } from '../api/cartAPI';
+import { getCartItems, addToCart, removeFromCart, placeOrder, decrementCartItem, incrementCartItem } from '../api/cartAPI';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [showOrderModal, setShowOrderModal] = useState(false);
-  const userId = 'dummyUser';
+  const user = JSON.parse(localStorage.getItem('user'));
+  const [quantities, setQuantities] = useState({});
+  const navigate = useNavigate();
 
-  // Load cart from localStorage on mount, then fetch from backend
-  // useEffect(() => {
-  //   const localCart = localStorage.getItem('cart');
-  //   if (localCart) {
-  //     setCartItems(JSON.parse(localCart));
-  //   }
-  //   fetchCart();
-  // }, []);
-
-  // Save cart to localStorage whenever cartItems changes
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  useEffect(() => {
-    const fetchCart = async () => {
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (!user) {
-        setCartItems([]);
-        return;
-      }
-
-      try {
-        const data = await getCartItems(userId);
-        setCartItems(data);
-      } catch (error) {
-        console.error('Failed to load cart:', error);
-      }
+  const handleOrderNow = async (item, key) => {
+    const quantity = quantities[key] || 1;
+    const total = item.price * quantity;
+    const order = {
+      items: [{ ...item, quantity }],
+      total,
+      // user: user?.name || "Guest",
+      // userId: 'dummyUser',
     };
+    try {
+      // await placeOrder(order);
+      sessionStorage.setItem('checkoutOrder', JSON.stringify(order));
+      navigate('/checkout')
+      alert('Order placed!');
+    } catch (err) {
+      alert('Failed to place order.');
+      console.error('Order error:', err);
+    }
+  };
+  // Fetch cart items
+  const fetchCart = async () => {
+    if (!user) {
+      setCartItems([]);
+      return;
+    }
+    try {
+      const data = await getCartItems(user._id);
+      setCartItems(data);
+      localStorage.setItem('cart', JSON.stringify(data));
+    } catch (error) {
+      console.error('Failed to load cart:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchCart();
   }, []);
 
-  // const fetchCart = async () => {
-  //   const user = JSON.parse(localStorage.getItem('user'));
-  //   if (!user) {
-  //     setCartItems([]);
-  //     return;
-  //   }
-
-  //   const data = await getCartItems(user._id); // Pass userId to API
-  //   setCartItems(data);
-  //   localStorage.setItem('cart', JSON.stringify(data));
-  // };
-
-  const handleAdd = async (item) => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      toast.error("Please login first");
-      return;
-    }
-
-    await addToCart({ ...item, userId: user._id });
-    toast.success(`${item.name} added to cart`);
-    fetchCart();
-  };
-
-  const handleDelete = async (id) => {
-    await removeFromCart(id);
-    fetchCart();
-  };
-
+  // Add item (increment quantity)
   const handleIncrement = async (item) => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      toast.error("Please login first");
-      return;
+    try {
+      await incrementCartItem(item._id);
+      fetchCart();
+    } catch (err) {
+      console.error('Failed to increment:', err);
     }
-
-    await addToCart({ ...item, quantity: 1, userId: user._id });
-    fetchCart();
   };
 
   const handleDecrement = async (item) => {
     try {
       await decrementCartItem(item._id);
       fetchCart();
-    } catch (error) {
-      console.error('Failed to decrement:', error);
+    } catch (err) {
+      console.error('Failed to decrement:', err);
     }
   };
 
+  // Delete item completely
+  const handleDelete = async (id) => {
+    console.log('handleDelete called with id:', id);
+    try {
+      await removeFromCart(id);
+      toast.success("Item removed from cart");
+      // optimistic update so user sees immediate change
+      setCartItems(prev => prev.filter(i => i._id !== id));
+      // refetch to be safe
+      fetchCart();
+    } catch (error) {
+      console.error('Failed to remove item (detailed):', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+        config: error.config,
+      });
+      toast.error("Failed to remove item: " + (error.response?.data?.message || error.message));
+    }
+  };
+
+  // Get total price
   const getTotal = () => {
     return cartItems.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
   };
 
+  // Place order
   const handleOrder = async () => {
-  const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      toast.error("Please login to place an order");
+      return;
+    }
+    if (!user.address || !user.phone) {
+      toast.error("Please complete your profile before placing an order");
+      return;
+    }
+    if (cartItems.length === 0) {
+      toast.error("Your cart is empty");
+      return;
+    }
 
-  // Step 1: Check if logged in
-  if (!user) {
-    toast.error("Please login to place an order");
-    // Optionally, navigate to login page
-    // navigate('/login');
-    return;
-  }
+    const order = {
+      items: cartItems,
+      userId: user._id,
+      total: getTotal(),
+    };
 
-  // Step 2: Check if profile is complete (example: address, phone)
-  if (!user.address || !user.phone) {
-    toast.error("Please complete your profile before placing an order");
-    // Optionally, navigate to profile page
-    // navigate('/profile');
-    return;
-  }
-
-  // Step 3: Check if cart has items
-  if (cartItems.length === 0) {
-    toast.error("Your cart is empty");
-    return;
-  }
-
-  // Step 4: Place order
-  const order = {
-    items: cartItems,
-    userId: user._id,
-    total: getTotal(),
+    try {
+      await placeOrder(order);
+      localStorage.setItem('lastOrder', JSON.stringify(order));
+      toast.success('Order placed successfully!');
+      setCartItems([]);
+      localStorage.removeItem('cart');
+    } catch (error) {
+      toast.error("Failed to place order. Please try again.");
+      console.error(error);
+    }
   };
-
-  try {
-    await placeOrder(order);
-    localStorage.setItem('lastOrder', JSON.stringify(order));
-    toast.success('Order placed successfully!');
-    setCartItems([]);
-    localStorage.removeItem('cart');
-  } catch (error) {
-    toast.error("Failed to place order. Please try again.");
-    console.error(error);
-  }
-};
-
 
   return (
     <section className="cart">
       <div className="cart-container">
         <h2>Your Cart</h2>
         {cartItems.length === 0 && <p>Your cart is empty.</p>}
+
         {cartItems.map(item => (
           <div key={item._id} className="cart-card" style={{ border: '1px solid #eee', borderRadius: 8, padding: 16, marginBottom: 16, boxShadow: '0 2px 8px #eee', display: 'flex', alignItems: 'center', gap: 16 }}>
             <img
-              src={item.image || 'https://via.placeholder.com/60'}
+              src={item.image || item.img || item.imageUrl || 'https://via.placeholder.com/60'}
               alt={item.name}
               style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8 }}
             />
@@ -165,19 +152,15 @@ const Cart = () => {
             </div>
           </div>
         ))}
+
         {cartItems.length > 0 && (
           <div className="order-summary">
             <h3>Order Summary</h3>
-
-            {/* Estimated Time */}
             <div className="summary-row">
               <span className="label">Estimated Delivery:</span>
               <span className="value orange-text">30-45 min</span>
             </div>
-
             <hr />
-
-            {/* Price Breakdown */}
             <div className="summary-row">
               <span className="label">Subtotal:</span>
               <span className="value">₹{getTotal()}</span>
@@ -190,22 +173,12 @@ const Cart = () => {
               <span className="label">Service Fee:</span>
               <span className="value">₹10</span>
             </div>
-
             <hr />
-
-            {/* Grand Total */}
             <div className="summary-row grand-total">
               <span className="label">Grand Total:</span>
-              <span className="value">
-                ₹{getTotal() + 30 + 10}
-              </span>
+              <span className="value">₹{getTotal() + 30 + 10}</span>
             </div>
-
-            {/* Order Now Button */}
-            <button
-              className="order-now-btn"
-              onClick={() => handleOrder(true)}
-            >
+            <button className="order-now-btn" onClick={() => navigate("/checkout")}>
               Order Now
             </button>
           </div>

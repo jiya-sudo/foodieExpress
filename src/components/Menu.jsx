@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import '../Stylesheets/Menu.css';
 import { placeOrder, getCartItems } from '../api/cartAPI';
 import { useNavigate } from 'react-router-dom';
+import margherita from '../Images/Margherita-Pizza.png';
 // import CheckoutSteps from './CheckoutSteps';
 const Menu = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -100,73 +101,73 @@ const Menu = () => {
     {
       title: '🍕 Pizza',
       items: [
-        { name: 'Margherita', desc: 'Classic cheese & tomato', price: 199, img: '/Images/pizza1.jpg' },
-        { name: 'Pepperoni', desc: 'Spicy pepperoni delight', price: 249, img: '/Images/pizza2.jpg' },
-        { name: 'Farmhouse', desc: 'Loaded with veggies', price: 229, img: '/Images/pizza3.jpg' },
+        { name: 'Margherita', desc: 'Classic cheese & tomato', price: 199, img: 'Images/margherita.png' },
+        { name: 'Pepperoni', desc: 'Spicy pepperoni delight', price: 249, img: 'Images/pepperoni.png' },
+        { name: 'Farmhouse', desc: 'Loaded with veggies', price: 229, img: '/Images/farmhouse.png' },
       ],
     },
     {
       title: '🍔 Burgers',
       items: [
-        { name: 'Veg Burger', desc: 'Fresh veggies & sauce', price: 119, img: '/Images/burger1.jpg' },
-        { name: 'Chicken Burger', desc: 'Grilled chicken patty', price: 149, img: '/Images/burger2.jpg' },
-        { name: 'Cheese Burst', desc: 'Double layer cheese', price: 179, img: '/Images/burger3.jpg' },
+        { name: 'Veg Burger', desc: 'Fresh veggies & sauce', price: 119, img: '/Images/vegburger.png' },
+        { name: 'Chicken Burger', desc: 'Grilled chicken patty', price: 149, img: '/Images/chicken.png' },
+        { name: 'Cheese Burst', desc: 'Double layer cheese', price: 179, img: '/Images/cheesy.png' },
       ],
     },
     {
       title: '🥤 Drinks',
       items: [
-        { name: 'Cola', desc: 'Chilled and fizzy', price: 49, img: '/Images/cola.jpg' },
-        { name: 'Orange Juice', desc: 'Freshly squeezed', price: 79, img: '/Images/orange.jpg' },
-        { name: 'Mango Shake', desc: 'Sweet & creamy', price: 99, img: '/Images/mango.jpg' },
+        { name: 'Cola', desc: 'Chilled and fizzy', price: 49, img: '/Images/cola.png' },
+        { name: 'Orange Juice', desc: 'Freshly squeezed', price: 79, img: '/Images/orange.png' },
+        { name: 'Mango Shake', desc: 'Sweet & creamy', price: 99, img: '/Images/mango.png' },
       ],
     },
     {
       title: '🍨 Desserts',
       items: [
-        { name: 'Vanilla Ice Cream', desc: 'Classic delight', price: 89, img: '/Images/vanilla.jpg' },
-        { name: 'Chocolate Cake', desc: 'Moist & rich', price: 149, img: '/Images/cake.jpg' },
+        { name: 'Vanilla Ice Cream', desc: 'Classic delight', price: 89, img: '/Images/vanilla.png' },
+        { name: 'Chocolate Cake', desc: 'Moist & rich', price: 149, img: '/Images/choco.png' },
         { name: 'Brownie', desc: 'Choco overload', price: 99, img: '/Images/brownie.jpg' },
       ],
     },
     {
       title: '🍛 Indian Meals',
       items: [
-        { name: 'Chicken Biryani', desc: 'Fragrant & spicy', price: 199, img: '/Images/biryani.jpg' },
-        { name: 'Paneer Butter Masala', desc: 'Rich gravy paneer', price: 179, img: '/Images/paneer.jpg' },
-        { name: 'Dal Tadka', desc: 'With jeera rice', price: 129, img: '/Images/dal.jpg' },
+        { name: 'Chicken Biryani', desc: 'Fragrant & spicy', price: 199, img: '/Images/biryani.png' },
+        { name: 'Paneer Butter Masala', desc: 'Rich gravy paneer', price: 179, img: '/Images/paneer.png' },
+        { name: 'Dal Tadka', desc: 'With jeera rice', price: 129, img: '/Images/dal.png' },
       ],
     },
     {
       title: '🍜 Chinese',
       items: [
-        { name: 'Veg Hakka Noodles', desc: 'Wok tossed spicy noodles', price: 129, img: '/Images/noodles.jpg' },
-        { name: 'Manchurian', desc: 'Dry or gravy', price: 139, img: '/Images/manchurian.jpg' },
-        { name: 'Fried Rice', desc: 'Choice of veg/egg', price: 119, img: '/Images/friedrice.jpg' },
+        { name: 'Veg Hakka Noodles', desc: 'Wok tossed spicy noodles', price: 129, img: '/Images/hakka.png' },
+        { name: 'Manchurian', desc: 'Dry or gravy', price: 139, img: '/Images/manchurian.png' },
+        { name: 'Fried Rice', desc: 'Choice of veg/egg', price: 119, img: '/Images/rice.png' },
       ],
     },
     {
       title: '🍟 Fast Food',
       items: [
-        { name: 'French Fries', desc: 'Crispy & golden', price: 79, img: '/Images/fries.jpg' },
-        { name: 'Samosa', desc: 'Spicy potato filled', price: 29, img: '/Images/samosa.jpg' },
-        { name: 'Grilled Sandwich', desc: 'Loaded with veggies', price: 89, img: '/Images/sandwich.jpg' },
+        { name: 'French Fries', desc: 'Crispy & golden', price: 79, img: '/Images/fries.png' },
+        { name: 'Samosa', desc: 'Spicy potato filled', price: 29, img: '/Images/samosa.png' },
+        { name: 'Grilled Sandwich', desc: 'Loaded with veggies', price: 89, img: '/Images/sandwich.png' },
       ],
     },
     {
       title: '🥗 Salads',
       items: [
-        { name: 'Greek Salad', desc: 'Feta, olives, cucumber', price: 109, img: '/Images/greek.jpg' },
-        { name: 'Caesar Salad', desc: 'Crisp lettuce & parmesan', price: 129, img: '/Images/caesar.jpg' },
-        { name: 'Fruit Bowl', desc: 'Mixed seasonal fruits', price: 99, img: '/Images/fruit.jpg' },
+        { name: 'Greek Salad', desc: 'Feta, olives, cucumber', price: 109, img: '/Images/greek.png' },
+        { name: 'Caesar Salad', desc: 'Crisp lettuce & parmesan', price: 129, img: '/Images/caesar.png' },
+        { name: 'Fruit Bowl', desc: 'Mixed seasonal fruits', price: 99, img: '/Images/fruit.png' },
       ],
     },
     {
       title: '🍳 Breakfast',
       items: [
-        { name: 'Masala Dosa', desc: 'With coconut chutney', price: 89, img: '/Images/dosa.jpg' },
-        { name: 'Poha', desc: 'Light & healthy', price: 49, img: '/Images/poha.jpg' },
-        { name: 'Paratha', desc: 'Stuffed with paneer/aloo', price: 69, img: '/Images/paratha.jpg' },
+        { name: 'Masala Dosa', desc: 'With coconut chutney', price: 89, img: '/Images/dosa.png' },
+        { name: 'Poha', desc: 'Light & healthy', price: 49, img: '/Images/poha.png' },
+        { name: 'Paratha', desc: 'Stuffed with paneer/aloo', price: 69, img: '/Images/paratha.png' },
       ],
     },
   ];

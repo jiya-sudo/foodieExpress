@@ -2,6 +2,9 @@
 
 import axios from 'axios';
 
+const API = axios.create({
+  baseURL: 'http://localhost:5000/api' // <-- adjust if your backend uses another prefix
+});
 
 // Get all cart items for a user (dummy userId for now)
 export const getCartItems = async (userId) => {
@@ -32,8 +35,8 @@ export const addToCart = async (item) => {
 
 // Remove a cart item by id
 export const removeFromCart = async (id) => {
-  const response = await axios.delete(`http://localhost:5000/api/cart/remove/${id}?userId=dummyUser`);
-  return response.data;
+  const res = await API.delete(`/cart/${id}`);
+  return res.data;
 };
 
 // Place an order
@@ -43,12 +46,12 @@ export const placeOrder = async (order) => {
 };
 
 //decreent cart item
+export const incrementCartItem = async (id) => {
+  const res = await API.put(`/cart/increment/${id}`);
+  return res.data;
+};
+
 export const decrementCartItem = async (id) => {
-  const res = await fetch(`/api/cart/decrement/${id}`, {
-    method: 'PATCH',
-  });
-
-  if (!res.ok) throw new Error('Failed to decrement item');
-
-  return await res.json();
+  const res = await API.put(`/cart/decrement/${id}`);
+  return res.data;
 };

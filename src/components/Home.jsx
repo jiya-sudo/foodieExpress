@@ -11,8 +11,11 @@ import spaghetti from '../Images/spaghetti-pic.png';
 import Margherita from '../Images/Margherita-Pizza.png';
 import salad from '../Images/salad1.png';
 import pasta from '../Images/pasta.jpg';
+import { FaVanShuttle } from "react-icons/fa6";
+import { BiSupport } from "react-icons/bi";
 import { Navigate, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { MdOutlineFoodBank } from "react-icons/md";
 import {
   faSearch,
   faCalendarCheck,
@@ -124,17 +127,24 @@ const Home = () => {
         <h2>Why Choose Us</h2>
         <div className="feature-cards">
           <div className="card" data-aos="fade-up" data-aos-delay="100">
-            <i className="iconss fa-solid fa-truck-fast"></i>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <FaVanShuttle size={100} color="rgba(37, 39, 37, 1)" />
+            </div>
+
             <h3>Fast Delivery</h3>
             <p>Get your food delivered in under 30 minutes!</p>
           </div>
           <div className="card" data-aos="fade-up" data-aos-delay="100">
-            <i className="iconss fa-solid fa-bowl-food"></i>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <MdOutlineFoodBank size={100} color="rgba(37, 39, 37, 1)" />
+            </div>
             <h3>Fresh Ingredients</h3>
             <p>We use only fresh and quality ingredients.</p>
           </div>
           <div className="card" data-aos="fade-up" data-aos-delay="100">
-            <i className="iconss fa-solid fa-headset"></i>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <BiSupport size={100} color="rgba(37, 39, 37, 1)" />
+            </div>
             <h3>24/7 Support</h3>
             <p>Our support team is here anytime you need us.</p>
           </div>

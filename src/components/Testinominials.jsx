@@ -114,7 +114,7 @@ const Testimonials = () => {
                 <a href="/sign-in" className="cta-btn">login / signup</a>
             </section>
 
-            <section className="testimonial-form-section">
+            {/* <section className="testimonial-form-section">
                 <div className="form-container">
                     <h2>Submit Your Testimonial 💬</h2>
                     <form className="forms" action="/submit_testimonial" method="POST">
@@ -133,7 +133,7 @@ const Testimonials = () => {
                         <button type="submit">Submit Testimonial</button>
                     </form>
                 </div>
-            </section>
+            </section> */}
         </>
     );
 };
