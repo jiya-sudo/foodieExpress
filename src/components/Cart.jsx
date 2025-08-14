@@ -1,35 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import '../Stylesheets/cart.css';
-import { getCartItems, addToCart, removeFromCart, placeOrder, decrementCartItem, incrementCartItem } from '../api/cartAPI';
+import { getCartItems, removeFromCart, placeOrder, decrementCartItem, incrementCartItem } from '../api/cartAPI';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const user = JSON.parse(localStorage.getItem('user'));
-  const [quantities, setQuantities] = useState({});
   const navigate = useNavigate();
 
-  const handleOrderNow = async (item, key) => {
-    const quantity = quantities[key] || 1;
-    const total = item.price * quantity;
-    const order = {
-      items: [{ ...item, quantity }],
-      total,
-      // user: user?.name || "Guest",
-      // userId: 'dummyUser',
-    };
-    try {
-      // await placeOrder(order);
-      sessionStorage.setItem('checkoutOrder', JSON.stringify(order));
-      navigate('/checkout')
-      alert('Order placed!');
-    } catch (err) {
-      alert('Failed to place order.');
-      console.error('Order error:', err);
-    }
-  };
-  // Fetch cart items
   const fetchCart = async () => {
     if (!user) {
       setCartItems([]);
@@ -48,7 +26,6 @@ const Cart = () => {
     fetchCart();
   }, []);
 
-  // Add item (increment quantity)
   const handleIncrement = async (item) => {
     try {
       await incrementCartItem(item._id);
@@ -67,131 +44,186 @@ const Cart = () => {
     }
   };
 
-  // Delete item completely
   const handleDelete = async (id) => {
-    console.log('handleDelete called with id:', id);
     try {
       await removeFromCart(id);
       toast.success("Item removed from cart");
-      // optimistic update so user sees immediate change
       setCartItems(prev => prev.filter(i => i._id !== id));
-      // refetch to be safe
       fetchCart();
     } catch (error) {
-      console.error('Failed to remove item (detailed):', {
-        message: error.message,
-        status: error.response?.status,
-        data: error.response?.data,
-        config: error.config,
-      });
-      toast.error("Failed to remove item: " + (error.response?.data?.message || error.message));
+      console.error(error);
+      toast.error("Failed to remove item");
     }
   };
 
-  // Get total price
   const getTotal = () => {
     return cartItems.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
   };
 
-  // Place order
-  const handleOrder = async () => {
-    if (!user) {
-      toast.error("Please login to place an order");
-      return;
-    }
-    if (!user.address || !user.phone) {
-      toast.error("Please complete your profile before placing an order");
-      return;
-    }
-    if (cartItems.length === 0) {
-      toast.error("Your cart is empty");
-      return;
-    }
+  const sectionStyle = {
+    padding: "20px",
+    backgroundColor: "#fafafa",
+    minHeight: "100vh",
+    fontFamily: "'Segoe UI', Tahoma, sans-serif"
+  };
 
-    const order = {
-      items: cartItems,
-      userId: user._id,
-      total: getTotal(),
-    };
+  const containerStyle = {
+    maxWidth: "900px",
+    margin: "0 auto"
+  };
 
-    try {
-      await placeOrder(order);
-      localStorage.setItem('lastOrder', JSON.stringify(order));
-      toast.success('Order placed successfully!');
-      setCartItems([]);
-      localStorage.removeItem('cart');
-    } catch (error) {
-      toast.error("Failed to place order. Please try again.");
-      console.error(error);
-    }
+  const cardStyle = {
+    display: "flex",
+    alignItems: "center",
+    background: "#fff",
+    border: "1px solid #eee",
+    borderRadius: "10px",
+    padding: "16px",
+    gap: "16px",
+    marginBottom: "16px",
+    boxShadow: "0 2px 8px #eee",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease"
+  };
+
+  const imgStyle = {
+    width: "60px",
+    height: "60px",
+    objectFit: "cover",
+    borderRadius: "8px"
+  };
+
+  const contentStyle = {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    gap: "6px"
+  };
+
+  const namePriceRowStyle = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap"
+  };
+
+  const quantityControlsStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px"
+  };
+
+  const quantityBtnStyle = {
+    display: "flex",
+    alignItems: "left",
+    backgroundColor: "#ff6b6b",
+    color: "white",
+    border: "none",
+    padding: "4px 10px",
+    fontSize: "1rem",
+    borderRadius: "5px",
+    cursor: "pointer",
+    transition: "background 0.2s ease"
+  };
+
+  const removeBtnStyle = {
+    background: "#eee",
+    color: "#ff6b6b",
+    border: "none",
+    borderRadius: "4px",
+    padding: "4px 12px",
+    cursor: "pointer",
+    fontWeight: "500",
+    marginTop: "4px"
+  };
+
+  const orderSummaryStyle = {
+    background: "#fff",
+    padding: "20px",
+    marginTop: "20px",
+    borderRadius: "12px",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)"
+  };
+
+  const summaryRowStyle = {
+    display: "flex",
+    justifyContent: "space-between",
+    margin: "8px 0"
+  };
+
+  const orderBtnStyle = {
+    width: "100%",
+    padding: "12px",
+    marginTop: "15px",
+    backgroundColor: "#ff6b6b",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "1.1rem",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    transition: "background 0.2s ease"
   };
 
   return (
-    <section className="cart">
-      <div className="cart-container">
-        <h2>Your Cart</h2>
-        {cartItems.length === 0 && <p>Your cart is empty.</p>}
+    <section style={sectionStyle}>
+      <div style={containerStyle}>
+        <h2 style={{ textAlign: "center", fontSize: "2rem", marginBottom: "20px", color: "#ff6b6b" }}>Your Cart</h2>
+        {cartItems.length === 0 && <p style={{ textAlign: "center", fontSize: "1.1rem", color: "#666" }}>Your cart is empty.</p>}
 
         {cartItems.map(item => (
-          <div key={item._id} className="cart-card" style={{ border: '1px solid #eee', borderRadius: 8, padding: 16, marginBottom: 16, boxShadow: '0 2px 8px #eee', display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div key={item._id} style={cardStyle}>
             <img
               src={item.image || item.img || item.imageUrl || 'https://via.placeholder.com/60'}
               alt={item.name}
-              style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8 }}
+              style={imgStyle}
             />
-            <div style={{ flex: 1 }}>
-              <h4>{item.name}</h4>
-              <p>Price: ₹{item.price}</p>
-              <div className="quantity-controls">
-                <button
-                  className="quantity-btn minus"
-                  onClick={() => handleDecrement(item)}
-                >-</button>
-
-                <span className="quantity-number">
-                  {item.quantity || 1}
-                </span>
-
-                <button
-                  className="quantity-btn plus"
-                  onClick={() => handleIncrement(item)}
-                >+</button>
+            <div style={contentStyle}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <h4 style={{ margin: 0 }}>{item.name}</h4>
+                <div style={quantityControlsStyle}>
+                  <button style={quantityBtnStyle} onClick={() => handleDecrement(item)}>-</button>
+                  <span style={{ fontWeight: "bold", fontSize: "1rem", minWidth: "20px", textAlign: "center" }}>
+                    {item.quantity || 1}
+                  </span>
+                  <button style={quantityBtnStyle} onClick={() => handleIncrement(item)}>+</button>
+                </div>
               </div>
-
-              <p>Total: ₹{item.price * (item.quantity || 1)}</p>
-              <button onClick={() => handleDelete(item._id)} style={{ background: '#eee', color: '#ff6b6b', border: 'none', borderRadius: 4, padding: '4px 12px', marginTop: 8, cursor: 'pointer' }}>Remove</button>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <p style={{ margin: 0, color: "#666" }}>Price: ₹{item.price}</p>
+                <p style={{ margin: 0, color: "#333", fontWeight: "bold" }}>Total: ₹{item.price * (item.quantity || 1)}</p>
+              </div>
+              <button style={removeBtnStyle} onClick={() => handleDelete(item._id)}>Remove</button>
             </div>
           </div>
         ))}
 
+
         {cartItems.length > 0 && (
-          <div className="order-summary">
+          <div style={orderSummaryStyle}>
             <h3>Order Summary</h3>
-            <div className="summary-row">
-              <span className="label">Estimated Delivery:</span>
-              <span className="value orange-text">30-45 min</span>
+            <div style={summaryRowStyle}>
+              <span>Estimated Delivery:</span>
+              <span style={{ color: "#ff6b6b" }}>30-45 min</span>
             </div>
             <hr />
-            <div className="summary-row">
-              <span className="label">Subtotal:</span>
-              <span className="value">₹{getTotal()}</span>
+            <div style={summaryRowStyle}>
+              <span>Subtotal:</span>
+              <span>₹{getTotal()}</span>
             </div>
-            <div className="summary-row">
-              <span className="label">Delivery Fee:</span>
-              <span className="value">₹30</span>
+            <div style={summaryRowStyle}>
+              <span>Delivery Fee:</span>
+              <span>₹30</span>
             </div>
-            <div className="summary-row">
-              <span className="label">Service Fee:</span>
-              <span className="value">₹10</span>
+            <div style={summaryRowStyle}>
+              <span>Service Fee:</span>
+              <span>₹10</span>
             </div>
             <hr />
-            <div className="summary-row grand-total">
-              <span className="label">Grand Total:</span>
-              <span className="value">₹{getTotal() + 30 + 10}</span>
+            <div style={{ ...summaryRowStyle, fontSize: "1.1rem", fontWeight: "bold" }}>
+              <span>Grand Total:</span>
+              <span>₹{getTotal() + 40}</span>
             </div>
-            <button className="order-now-btn" onClick={() => navigate("/checkout")}>
-              Order Now
-            </button>
+            <button style={orderBtnStyle} onClick={() => navigate("/checkout")}>Order Now</button>
           </div>
         )}
       </div>

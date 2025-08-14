@@ -94,14 +94,14 @@ const Home = () => {
       </section>
 
       {/* Category Tabs Section */}
-      <section className="category-tabs">
+      {/* <section className="category-tabs">
         <ul className="tabs">
           <li className="active">Pizza</li>
           <li>Burgers</li>
           <li>Drinks</li>
           <li>Desserts</li>
-        </ul>
-      </section>
+        </ul> */}
+      {/* </section> */}
 
       {/* Featured Dishes Section */}
       <section className="featured">

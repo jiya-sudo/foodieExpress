@@ -134,9 +134,10 @@ a {
 .search-bar::placeholder {
     color: #9b9191;
 }
+
 /* ========== Category Tabs ========== */
 .category-tabs {
-  padding:10px 20px 10px;
+  padding:10px 10px;
   text-align: center;
   background-color: #ffe9e9;
 }
@@ -147,7 +148,7 @@ a {
   justify-content: center;
   list-style: none;
   gap: 20px;
-  padding: 0;
+  padding: 10px;
   margin: 0;
 }
 
@@ -155,7 +156,7 @@ a {
   background-color: #fdfdfd;
   color: #2f3542;
   border: 2px solid #ff6b6b;
-  padding: 10px 20px;
+  padding: 10px 10px;
   border-radius: 25px;
   font-weight: 500;
   cursor: pointer;
