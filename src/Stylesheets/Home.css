@@ -24,115 +24,88 @@ a {
 }
 
 
-/* ================= HERO ================= */
+/* ================= HERO CAROUSEL ================= */
 .hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 8% 2%;
-  background-image: url('bg01.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  position: relative;
   width: 100%;
-  min-height: 500px;
+  height: 80vh;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.hero-slide.active {
+  opacity: 1;
 }
 
 .hero-content {
-  max-width: 600px;
-  color: white;
-  padding: 20px;
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.6);
-  border-radius: 8px;
+  padding: 20px 30px;
+  border-radius: 10px;
+  color: #fff;
   text-align: center;
+  max-width: 600px;
 }
 
 .hero-content h1 {
-  font-size: 36px;
+  font-size: 2.5rem;
   margin-bottom: 10px;
 }
 
 .hero-content p {
-  font-size: 18px;
+  font-size: 1.2rem;
   margin-bottom: 20px;
 }
 
-.button {
-  display: inline-block;
+.hero .button {
   background: linear-gradient(45deg, #ff6b6b, #ffa601);
-  color: white;
   padding: 12px 25px;
-  border-radius: 5px;
-  text-decoration: none;
+  border-radius: 6px;
   font-weight: bold;
-  transition: background 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
-.button:hover {
-  color: white;
-  background:linear-gradient(45deg, #ff6b6b, #ffa601);
-  transform: translateY(-10%);
-  
+.hero .button:hover {
+  transform: translateY(-5px);
 }
 
-.button:disabled {
-  background-color: rgb(90, 82, 82);
-  cursor: not-allowed;
+/* carousel navigation dots */
+.hero-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
 }
 
-.overlay {
-    color: white;
-    text-align: center;
+.hero-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.overlay .search-container {
-    display: inline-block;
-}
-
-#features{
-    padding: 60px 20px;
-    text-align: center;
-    color: black;
-    background: linear-gradient(to right, #ff6b6b, #ffa702);
-}
-
-.search-container {
-    position: relative;
-    max-width: 300px;
-    margin: 20px 30px 20px 0;
-    flex-grow: 1;
-}
-
-.search-container i {
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-    color: #888;
-    font-size: 16px;
-}
-
-.search-bar {
-    width: 100%;
-    padding: 12px 15px 12px 40px;
-    border: 1px solid #e0e0e0;
-    border-radius: 20px;
-    font-size: 16px;
-    color: #333;
-    background-color: #f8f8f8;
-    transition: all 0.3s ease;
-}
-
-.search-bar:focus {
-    outline: none;
-    border-color: #ff6b6b;
-    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
-    background-color: white;
-}
-
-.search-bar::placeholder {
-    color: #9b9191;
+.hero-dots span.active {
+  opacity: 1;
+  background: #ff6b6b;
 }
 
 /* ========== Category Tabs ========== */
@@ -364,9 +337,16 @@ a {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   padding: 30px 20px;
   width: 280px;
+  min-height: 320px;  /* keeps cards equal height */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* center content horizontally */
+  justify-content: flex-start; /* ✅ stack content at the top instead of spacing */
 }
+
 
 .feature-cards .card:hover {
   transform: translateY(-10px);

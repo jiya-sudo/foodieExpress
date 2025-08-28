@@ -65,7 +65,7 @@ const Menu = () => {
 
       const data = await res.json();
 
-      if (!res.ok) {
+      if (res.ok) {
         const confirmed = window.confirm(`${item.name} added to cart. Go to Cart?`);
         if (confirmed) navigate('/cart');
       } else {
@@ -242,7 +242,7 @@ const Menu = () => {
                   </div>
                   <div className='action-buttons'>
                     <button
-                      onClick={() => handleAdd({ name: item.name, price: item.price, img: item.img }, key)}
+                      onClick={() => addToCart(item, quantity)}
                       className='add-to-cart'
                     >Add to Cart</button>
                     <button

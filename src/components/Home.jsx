@@ -56,31 +56,35 @@ const Home = () => {
 
 
       {/* <!-- 1.hero section --> */}
-      <section
-        className="hero"
-        style={{
-          background: 'linear-gradient(to right, rgba(255, 0, 0, 0.5), rgba(255, 230, 0, 0.5))',
-          height: '10vh',
-          width: '100%',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}>
-        <div className="overlay">
-          <h2 style={{ fontWeight: 'bold', color: 'white', fontSize: '40px', textAlign: 'center', fontFamily: 'Arial' }}>
-            Welcome to FoodieExpress
-          </h2>
-          <p style={{ color: 'white' }}>Your favorite meals delivered fast and fresh.</p>
-        </div>
+      <section className="hero">
+        {[
+          { img: bg, title: "Delicious Food", desc: "Fresh meals delivered fast!" },
+          { img: pasta, title: "Italian Pasta", desc: "Authentic flavors in every bite." },
+          { img: Margherita, title: "Cheesy Pizza", desc: "Hot and cheesy pizzas anytime." },
+        ].map((slide, idx) => (
+          <div
+            key={idx}
+            className={`hero-slide ${idx === 0 ? "active" : ""}`}
+            style={{ backgroundImage: `url(${slide.img})` }}
+          >
+            <div className="hero-content">
+              <h1>{slide.title}</h1>
+              <p>{slide.desc}</p>
+              <button className="button" onClick={() => navigate('/Menu')}>
+                Order Now
+              </button>
+            </div>
+          </div>
+        ))}
 
-        <div className="hero-content">
-          <h1>Delicious Food Delivered to Your Doorstep</h1>
-          <p>Order your favorite meals from the best restaurants in town.</p>
-          <button className="button" onClick={() => navigate('/Menu')}>
-            Order Now
-          </button>
-
+        {/* Navigation dots */}
+        <div className="hero-dots">
+          <span className="active"></span>
+          <span></span>
+          <span></span>
         </div>
       </section>
+
 
       {/* Top Restaurants Section */}
       <section className="top-restaurants">
